@@ -5,6 +5,7 @@ namespace Turcu_Teodora_Lab2.Data
 {
     public class Turcu_Teodora_Lab2Context : DbContext
     {
+        public DbSet<Turcu_Teodora_Lab2.Models.Category> Category { get; set; } = default!;
         public Turcu_Teodora_Lab2Context(DbContextOptions<Turcu_Teodora_Lab2Context> options)
             : base(options)
         {

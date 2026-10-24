@@ -1,21 +1,24 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Turcu_Teodora_Lab2.Data;
 using Turcu_Teodora_Lab2.Models;
 
 namespace Turcu_Teodora_Lab2.Pages.BookPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly Turcu_Teodora_Lab2Context _context;
+        private readonly Turcu_Teodora_Lab2.Data.Turcu_Teodora_Lab2Context _context;
 
-        public DetailsModel(Turcu_Teodora_Lab2Context context)
+        public DetailsModel(Turcu_Teodora_Lab2.Data.Turcu_Teodora_Lab2Context context)
         {
             _context = context;
         }
 
-        public Book Book { get; set; } = default!;
+        public Book Book { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -24,17 +27,16 @@ namespace Turcu_Teodora_Lab2.Pages.BookPages
                 return NotFound();
             }
 
-            var book = await _context.Book
+            Book = await _context.Book
                 .Include(b => b.Publisher)
                 .Include(b => b.Author)
+                .Include(b => b.BookCategories).ThenInclude(bc => bc.Category)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
-            if (book == null)
+            if (Book == null)
             {
                 return NotFound();
             }
-
-            Book = book;
             return Page();
         }
     }
