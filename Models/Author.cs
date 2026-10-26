@@ -1,18 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Turcu_Teodora_Lab2.Models;
 
-namespace Turcu_Teodora_Lab2.Models
+public class Author
 {
-    public class Author
+    public int ID { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+
+    [Display(Name = "Full Name")]
+    public string FullName
     {
-        public int ID { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-
-        [NotMapped]
-        [Display(Name = "Author")]
-        public string FullName => FirstName + " " + LastName;
-
-        public ICollection<Book>? Books { get; set; }
+        get
+        {
+            return FirstName + " " + LastName;
+        }
     }
+
+    public ICollection<Book>? Books { get; set; }
 }
