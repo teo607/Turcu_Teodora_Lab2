@@ -121,6 +121,9 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
+                // Lab 6, pasul 7: asociem utilizatorul cu rolul "User"
+                var role = await _userManager.AddToRoleAsync(user, "User");
+
                 // Salvam si membrul in tabelul Member, cu acelasi email
                 Member.Email = Input.Email;
                 _context.Member.Add(Member);
